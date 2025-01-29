@@ -1,20 +1,22 @@
 
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.Tilemaps;
 
 public class GameManager : SingletonManager<GameManager>
 {
+    [Header("Tilemaps")]
+    [SerializeField] private Tilemap m_WalkableTilemap;
+    [SerializeField] private Tilemap m_OverlayTilemap;
+    [SerializeField] private Tilemap[] m_UnreachableTilemaps;
+
+
     [Header("UI")]
     [SerializeField] private PointToClick m_PointToClickPrefab;
     [SerializeField] private ActionBar m_ActionBar;
 
 
     public Unit ActiveUnit;
-    private Vector2 m_InitialTouchPosition;
-
-    public Vector2 InputPosition => Input.touchCount > 0 ? Input.GetTouch(0).position : Input.mousePosition;
-    public bool IsLeftClickOrTapDown => Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began);
-    public bool IsLeftClickOrTapUp => Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended);
+    private PlacementProcess m_PlacementProcess;
 
     public bool HasActiveUnit => ActiveUnit != null;
     void Start()
@@ -24,28 +26,30 @@ public class GameManager : SingletonManager<GameManager>
 
     void Update()
     {
-
-        if (IsLeftClickOrTapDown)
+        if (m_PlacementProcess != null)
         {
-            m_InitialTouchPosition = InputPosition;
+            m_PlacementProcess.Update();
+        }
+        else if (HvoUtils.TryGetShortClickPosition(out Vector2 inputPosition))
+        {
+            DetectClick(inputPosition);
         }
 
-        if (IsLeftClickOrTapUp)
-        {
-            if (Vector2.Distance(m_InitialTouchPosition, InputPosition) < 10)
-            {
-                DetectClick(InputPosition);
-            }
 
-        }
     }
     public void StartBuildProcess(BuildActionSO buildAction)
     {
-        Debug.Log("ok" + buildAction.ActionName);
+        m_PlacementProcess = new PlacementProcess(
+            buildAction,
+            m_WalkableTilemap,
+            m_OverlayTilemap,
+            m_UnreachableTilemaps
+            );
+        m_PlacementProcess.ShowPlacementOutline();
     }
     void DetectClick(Vector2 inputPosition)
     {
-        if (IsPointerOverUIElement())
+        if (HvoUtils.IsPointerOverUIElement())
         {
             return;
         }
@@ -152,16 +156,5 @@ public class GameManager : SingletonManager<GameManager>
         m_ActionBar.ClearActions();
         m_ActionBar.Hide();
     }
-    bool IsPointerOverUIElement()
-    {
-        if (Input.touchCount > 0)
-        {
-            var touch = Input.GetTouch(0);
-            return EventSystem.current.IsPointerOverGameObject(touch.fingerId);
-        }
-        else
-        {
-            return EventSystem.current.IsPointerOverGameObject();
-        }
-    }
+
 }
