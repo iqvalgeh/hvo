@@ -1,3 +1,6 @@
+
+
+
 using UnityEngine;
 
 public abstract class SingletonManager<T> : MonoBehaviour where T : MonoBehaviour
@@ -11,6 +14,7 @@ public abstract class SingletonManager<T> : MonoBehaviour where T : MonoBehaviou
             return;
         }
     }
+
     public static T Get()
     {
         var tag = typeof(T).Name;
@@ -19,10 +23,9 @@ public abstract class SingletonManager<T> : MonoBehaviour where T : MonoBehaviou
         {
             return managerObject.GetComponent<T>();
         }
+
         GameObject go = new(tag);
         go.tag = tag;
         return go.AddComponent<T>();
     }
-
-
 }

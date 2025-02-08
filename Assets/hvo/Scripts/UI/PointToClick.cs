@@ -1,3 +1,6 @@
+
+
+
 using UnityEngine;
 
 public class PointToClick : MonoBehaviour
@@ -35,6 +38,7 @@ public class PointToClick : MonoBehaviour
             float fadeProgress = (m_Timer - m_Duration * 0.9f) / (m_Duration * 0.1f);
             m_SpriteRenderer.color = new Color(1, 1, 1, 1 - fadeProgress);
         }
+
         if (m_Timer >= m_Duration)
         {
             Destroy(gameObject);

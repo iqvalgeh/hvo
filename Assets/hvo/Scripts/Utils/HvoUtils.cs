@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,9 +10,11 @@ public static class HvoUtils
 
     private static Vector2 m_InitialTouchPosition;
 
+
     public static bool TryGetShortClickPosition(out Vector2 inputPosition, float maxDistance = 5f)
     {
         inputPosition = InputPosition;
+
         if (IsLeftClickOrTapDown)
         {
             m_InitialTouchPosition = inputPosition;
@@ -24,6 +27,7 @@ public static class HvoUtils
                 return true;
             }
         }
+
         return false;
     }
 
@@ -38,11 +42,10 @@ public static class HvoUtils
         {
             worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             return true;
-
         }
+
         worldPosition = Vector3.zero;
         return false;
-
     }
 
     public static bool IsPointerOverUIElement()
@@ -57,5 +60,4 @@ public static class HvoUtils
             return EventSystem.current.IsPointerOverGameObject();
         }
     }
-
 }
