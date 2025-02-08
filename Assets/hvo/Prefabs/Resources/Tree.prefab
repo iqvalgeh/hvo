@@ -103,6 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Collider: {fileID: 1558602049108837538}
+  m_Animator: {fileID: 4886169948537788772}
+  m_Claimed: 0
 --- !u!95 &4886169948537788772
 Animator:
   serializedVersion: 7
