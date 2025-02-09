@@ -190,4 +190,62 @@ MonoBehaviour:
   m_AutoAttackDamage: 10
   m_Health: 100
   m_DamageFlashColor: {r: 1, g: 0.65, b: 0.65, a: 1}
+  m_InteractionAudioSettings:
+    Clips:
+    - {fileID: 8300000, guid: e0274de0521d74da2bf7e2f6121d3b30, type: 3}
+    - {fileID: 8300000, guid: b4e027bdc22884aecbc13c6153f22379, type: 3}
+    - {fileID: 8300000, guid: e5bd3cc2fb973429d98466bfbd8cd1c5, type: 3}
+    - {fileID: 8300000, guid: ddc5606f2091b4ec3859912b93594ebd, type: 3}
+    - {fileID: 8300000, guid: 75fdce6cc3c1e4911a7f6f09b7264f7d, type: 3}
+    - {fileID: 8300000, guid: 5c545463f37b34d4881ea5978789250b, type: 3}
+    - {fileID: 8300000, guid: f6a97dd90f2554fe7915dbedd44be191, type: 3}
+    - {fileID: 8300000, guid: 10d71fd1e87d24243a26859dc30a63bd, type: 3}
+    - {fileID: 8300000, guid: db2c3eed1d0394bfbb7b135bcca5efe4, type: 3}
+    - {fileID: 8300000, guid: 5a3ac6157388848e0a6e93a8c06eb8ef, type: 3}
+    Volume: 0.4
+    Pitch: 1
+    Loop: 0
+    SpatialBlend: 0
+    MinDistance: 1
+    MaxDistance: 15
+    Priority: 128
+    RolloffMode: 1
+  m_AttackAudioSettings:
+    Clips:
+    - {fileID: 8300000, guid: 01aa828480074fc44b5d6d5e06c7bae7, type: 3}
+    - {fileID: 8300000, guid: f08345bded911a0409e6de8051d97b79, type: 3}
+    - {fileID: 8300000, guid: d63431148ab2f3249b55714c12086dfb, type: 3}
+    Volume: 0.6
+    Pitch: 1
+    Loop: 0
+    SpatialBlend: 1
+    MinDistance: 1
+    MaxDistance: 15
+    Priority: 128
+    RolloffMode: 1
+  m_TerminationAudioSettings:
+    Clips:
+    - {fileID: 8300000, guid: 2e1526493b61133479bfb639faf8fd2a, type: 3}
+    Volume: 0.6
+    Pitch: 1
+    Loop: 0
+    SpatialBlend: 1
+    MinDistance: 1
+    MaxDistance: 15
+    Priority: 128
+    RolloffMode: 1
   IsTargeted: 0
+  m_FootstepAudioSettings:
+    Clips:
+    - {fileID: 8300000, guid: 1c6490203fe641442a6025fc90655748, type: 3}
+    - {fileID: 8300000, guid: 67fac9cefb9c7004e8b92c2b30a695e6, type: 3}
+    - {fileID: 8300000, guid: 22296c915fe68184eb30c3dbe60145d3, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    SpatialBlend: 1
+    MinDistance: 1
+    MaxDistance: 15
+    Priority: 128
+    RolloffMode: 1
+  m_FootstepFrequency: 0.3

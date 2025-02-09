@@ -33,6 +33,10 @@ public class GameManager : SingletonManager<GameManager>
     [Header("Spawning")]
     [SerializeField] private EnemySpawner m_EnemySpawner;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSettings m_PlacementAudioSettings;
+    [SerializeField] private AudioSettings m_BgMusicAudioSettings;
+
     public Unit ActiveUnit;
 
     private Unit m_KingUnit;
@@ -58,6 +62,7 @@ public class GameManager : SingletonManager<GameManager>
         AddResources(500, 500);
 
         m_EnemySpawner.Startup();
+        AudioManager.Get().PlayMusic(m_BgMusicAudioSettings);
     }
 
     void Update()
@@ -338,13 +343,13 @@ public class GameManager : SingletonManager<GameManager>
         {
             if (TryGetClickedResource(hit, out Tree tree))
             {
-                worker.SendToChop(tree);
+                worker.SendToChop(tree, DestinationSource.PlayerClick);
                 DisplayClickEffect(tree.transform.position, ClickType.Chop);
                 return;
             }
             else if (TryGetClickedResource(hit, out GoldMine mine))
             {
-                worker.SendToMine(mine);
+                worker.SendToMine(mine, DestinationSource.PlayerClick);
                 DisplayClickEffect(mine.transform.position, ClickType.Build);
                 return;
             }
@@ -425,7 +430,7 @@ public class GameManager : SingletonManager<GameManager>
                 if (WorkerClickedOnUnfinishedBuild(unit))
                 {
                     DisplayClickEffect(unit.transform.position, ClickType.Build);
-                    worker.SendToBuild(unit as StructureUnit);
+                    worker.SendToBuild(unit as StructureUnit, DestinationSource.PlayerClick);
                     return;
                 }
                 else if (worker.IsHoldingWood && WorkerClickedOnWoodStorage(unit))
@@ -480,7 +485,7 @@ public class GameManager : SingletonManager<GameManager>
     {
         if (HasActiveUnit)
         {
-            ActiveUnit.SetTarget(enemyUnit);
+            ActiveUnit.SetTarget(enemyUnit, DestinationSource.PlayerClick);
             ActiveUnit.SetTask(UnitTask.Attack);
             DisplayClickEffect(enemyUnit.GetTopPosition(), ClickType.Attack);
         }
@@ -585,6 +590,7 @@ public class GameManager : SingletonManager<GameManager>
         if (m_PlacementProcess.TryFinalizePlacement(out Vector3 buildPosition))
         {
             DisplayClickEffect(buildPosition, ClickType.Build);
+            AudioManager.Get().PlaySound(m_PlacementAudioSettings, buildPosition);
             m_BuildConfirmationBar.Hide();
 
             new BuildingProcess(

@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76b88dcf7e70c0d46afb360d0e2e82dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_IsKingUnit: 0
   m_Actions:
   - {fileID: 11400000, guid: 07bfe1a692e83ea48918373e5dd13375, type: 2}
   m_ObjectDetectionRadius: 1
@@ -190,12 +191,89 @@ MonoBehaviour:
   m_AutoAttackDamage: 7
   m_Health: 8
   m_DamageFlashColor: {r: 1, g: 0.27, b: 0.25, a: 1}
+  m_InteractionAudioSettings:
+    Clips:
+    - {fileID: 8300000, guid: 1f4964e7526ea4becbf476b329e0d8ac, type: 3}
+    - {fileID: 8300000, guid: 7d4e4403e95dd4d408cd96996261b2d8, type: 3}
+    - {fileID: 8300000, guid: a26fec4094f634c2c84db55c9707ccfe, type: 3}
+    - {fileID: 8300000, guid: c6a5932d39f6247d6a20100deedfed22, type: 3}
+    - {fileID: 8300000, guid: 9dba9d6ee2e894b098e417ac9f4b9dcb, type: 3}
+    - {fileID: 8300000, guid: 5da847da335cd4054ac9e09a9106cb9f, type: 3}
+    - {fileID: 8300000, guid: 654ba0236a27241a0a08519d3e8f115c, type: 3}
+    - {fileID: 8300000, guid: dddb1a4b7cc814071928bd7eb2c4ed29, type: 3}
+    - {fileID: 8300000, guid: a2ad6f40050d94ccb9e5b26d2b1eed12, type: 3}
+    - {fileID: 8300000, guid: 006ed85bd3147429a8b75418e3158a51, type: 3}
+    Volume: 0.4
+    Pitch: 1
+    Loop: 0
+    SpatialBlend: 0
+    MinDistance: 1
+    MaxDistance: 15
+    Priority: 128
+    RolloffMode: 1
+  m_AttackAudioSettings:
+    Clips: []
+    Volume: 0.6
+    Pitch: 1
+    Loop: 0
+    SpatialBlend: 1
+    MinDistance: 1
+    MaxDistance: 15
+    Priority: 128
+    RolloffMode: 1
+  m_TerminationAudioSettings:
+    Clips:
+    - {fileID: 8300000, guid: 2e1526493b61133479bfb639faf8fd2a, type: 3}
+    Volume: 0.6
+    Pitch: 1
+    Loop: 0
+    SpatialBlend: 1
+    MinDistance: 1
+    MaxDistance: 15
+    Priority: 128
+    RolloffMode: 1
   IsTargeted: 0
+  m_FootstepAudioSettings:
+    Clips:
+    - {fileID: 8300000, guid: 1c6490203fe641442a6025fc90655748, type: 3}
+    - {fileID: 8300000, guid: 67fac9cefb9c7004e8b92c2b30a695e6, type: 3}
+    - {fileID: 8300000, guid: 22296c915fe68184eb30c3dbe60145d3, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    SpatialBlend: 1
+    MinDistance: 1
+    MaxDistance: 15
+    Priority: 128
+    RolloffMode: 1
+  m_FootstepFrequency: 0.3
   m_WoodGatherTickTime: 1
   m_WoodPerTick: 1
-  m_HitTreeFrequency: 0.3
+  m_HitTreeFrequency: 0.6
   m_HoldingWoodSprite: {fileID: 2340193438314560637}
   m_HoldingGoldSprite: {fileID: 4378700129470618534}
+  m_ChopAudioSettings:
+    Clips:
+    - {fileID: 8300000, guid: 35fd046b281fbfd41a5f52e988a82b90, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    SpatialBlend: 1
+    MinDistance: 1
+    MaxDistance: 15
+    Priority: 128
+    RolloffMode: 1
+  m_BuildAudioSettings:
+    Clips:
+    - {fileID: 8300000, guid: 8b395e1bc1827a34c92cd3a98e63226b, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    SpatialBlend: 1
+    MinDistance: 1
+    MaxDistance: 15
+    Priority: 128
+    RolloffMode: 1
 --- !u!1 &4290304377699428277
 GameObject:
   m_ObjectHideFlags: 0

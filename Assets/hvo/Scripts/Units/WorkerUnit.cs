@@ -10,6 +10,8 @@ public class WorkerUnit : HumanoidUnit
 
     [SerializeField] private SpriteRenderer m_HoldingWoodSprite;
     [SerializeField] private SpriteRenderer m_HoldingGoldSprite;
+    [SerializeField] private AudioSettings m_ChopAudioSettings;
+    [SerializeField] private AudioSettings m_BuildAudioSettings;
 
     private float m_ChoppingTimer;
     private float m_HitTreeTimer;
@@ -75,14 +77,6 @@ public class WorkerUnit : HumanoidUnit
         HandleResourceDisplay();
     }
 
-    protected override void OnSetDestination(DestinationSource source)
-    {
-        if (CurrentState == UnitState.Minig) return;
-
-        SetState(UnitState.Moving);
-        ResetState();
-    }
-
     public void OnBuildingFinished() => ResetState();
 
     public void SetWoodStorage(StructureUnit storage)
@@ -95,35 +89,28 @@ public class WorkerUnit : HumanoidUnit
         m_AssignedGoldStorage = storage;
     }
 
-    public void SendToBuild(StructureUnit structure)
+    public void SendToBuild(StructureUnit structure, DestinationSource destinationSource = DestinationSource.CodeTriggered)
     {
-        MoveTo(structure.transform.position);
+        MoveTo(structure.transform.position, destinationSource);
         SetTarget(structure);
         SetTask(UnitTask.Build);
     }
 
-    public void SendToChop(Tree tree)
+    public void SendToChop(Tree tree, DestinationSource destinationSource = DestinationSource.CodeTriggered)
     {
         if (tree.TryToClaim())
         {
-            MoveTo(tree.GetBottomPosition());
+            MoveTo(tree.GetBottomPosition(), destinationSource);
             SetTask(UnitTask.Chop);
             m_AssignedTree = tree;
         }
     }
 
-    public void SendToMine(GoldMine mine)
+    public void SendToMine(GoldMine mine, DestinationSource destinationSource = DestinationSource.CodeTriggered)
     {
-        MoveTo(mine.GetBottomPosition());
+        MoveTo(mine.GetBottomPosition(), destinationSource);
         SetTask(UnitTask.Mine);
         m_AssignedMine = mine;
-    }
-
-    protected override void Die()
-    {
-        base.Die();
-        if (m_AssignedTree != null) m_AssignedTree.Release();
-
     }
 
     public void OnEnterMine()
@@ -144,6 +131,27 @@ public class WorkerUnit : HumanoidUnit
             MoveTo(m_AssignedGoldStorage.transform.position);
             SetTask(UnitTask.ReturnResource);
         }
+    }
+
+    public void PlayBuildSound()
+    {
+        m_AudioManager.PlaySound(m_BuildAudioSettings, transform.position);
+    }
+
+    protected override void OnSetDestination(DestinationSource source)
+    {
+        base.OnSetDestination(source);
+        if (CurrentState == UnitState.Minig) return;
+
+        SetState(UnitState.Moving);
+        ResetState();
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        if (m_AssignedTree != null) m_AssignedTree.Release();
+
     }
 
     bool TryToReturnResources(StructureUnit storage, float distanceTreshold = 0.5f)
@@ -225,6 +233,7 @@ public class WorkerUnit : HumanoidUnit
         {
             m_HitTreeTimer = 0;
             m_AssignedTree.Hit();
+            m_AudioManager.PlaySound(m_ChopAudioSettings, transform.position);
         }
 
         if (m_ChoppingTimer >= m_WoodGatherTickTime)
