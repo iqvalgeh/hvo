@@ -1,25 +1,38 @@
-
-
-
 using UnityEngine;
 
 public class CameraController
 {
     private float m_PanSpeed;
     private float m_MobilePanSpeed;
+    private float m_ZoomSpeed;
+    private float m_MinZoom;
+    private float m_MaxZoom;
 
     public bool LockCamera { get; set; }
 
-    public CameraController(float panSpeed, float mobilePanSpeed)
+    private float m_LastTapTime = 0f;
+    private float m_DoubleTapThreshold = 0.3f;
+    private bool m_ZoomedIn = false;
+
+    public CameraController(float panSpeed, float mobilePanSpeed, float zoomSpeed, float minZoom, float maxZoom)
     {
         m_PanSpeed = panSpeed;
         m_MobilePanSpeed = mobilePanSpeed;
+        m_ZoomSpeed = zoomSpeed;
+        m_MinZoom = minZoom;
+        m_MaxZoom = maxZoom;
     }
 
     public void Update()
     {
         if (LockCamera) return;
 
+        HandlePan();
+        HandleZoom();
+    }
+
+    private void HandlePan()
+    {
         if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
@@ -40,5 +53,31 @@ public class CameraController
                 0
             );
         }
+    }
+
+    private void HandleZoom()
+    {
+        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            float currentTime = Time.time;
+            if (currentTime - m_LastTapTime < m_DoubleTapThreshold)
+            {
+                ToggleZoom();
+            }
+            m_LastTapTime = currentTime;
+        }
+    }
+
+    private void ToggleZoom()
+    {
+        if (Camera.main.orthographic)
+        {
+            Camera.main.orthographicSize = m_ZoomedIn ? m_MaxZoom : m_MinZoom;
+        }
+        else
+        {
+            Camera.main.fieldOfView = m_ZoomedIn ? m_MaxZoom : m_MinZoom;
+        }
+        m_ZoomedIn = !m_ZoomedIn;
     }
 }
